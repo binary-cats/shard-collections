@@ -1,37 +1,22 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace BinaryCats\ShardCollections\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use BinaryCats\ShardCollections\ShardCollectionServiceProvider;
+use PHPUnit\Framework\TestCase as BaseTestCase;
+use ReflectionClass;
 
-class TestCase extends Orchestra
+abstract class TestCase extends BaseTestCase
 {
     protected function setUp(): void
     {
-        parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        $this->createDummyProvider()->register();
     }
 
-    protected function getPackageProviders($app)
+    protected function createDummyProvider(): ShardCollectionServiceProvider
     {
-        return [
-            SkeletonServiceProvider::class,
-        ];
-    }
+        $reflectionClass = new ReflectionClass(ShardCollectionServiceProvider::class);
 
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        return $reflectionClass->newInstanceWithoutConstructor();
     }
 }
