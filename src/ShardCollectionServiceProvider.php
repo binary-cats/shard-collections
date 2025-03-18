@@ -21,7 +21,7 @@ class ShardCollectionServiceProvider extends ServiceProvider
     {
         return [
             'shard' => \BinaryCats\ShardCollections\Macros\Shard::class,
-            // 'shardWithKeys' => \BinaryCats\ShardCollections\Macros\Shard::class,
+            'shardWithKeys' => \BinaryCats\ShardCollections\Macros\ShardWithKeys::class,
         ];
     }
 }
