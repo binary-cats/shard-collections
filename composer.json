@@ -62,10 +62,7 @@
         "laravel": {
             "providers": [
                 "BinaryCats\\ShardCollection\\ShardCollectionServiceProvider"
-            ],
-            "aliases": {
-                "ShardCollection": "BinaryCats\\ShardCollection\\Facades\\ShardCollection"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
