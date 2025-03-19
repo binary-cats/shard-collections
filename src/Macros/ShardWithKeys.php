@@ -15,8 +15,8 @@ class ShardWithKeys
 {
     public function __invoke(): Closure
     {
-        return function (iterable $map, ?string $remainderKey = null, bool $preserveKeys = false) {
-            return $this->pipe(function ($collection) use ($map, $remainderKey, $preserveKeys) {
+        return function (iterable $map, ?string $remainderKey = null, bool $preserveKeys = false, bool $forceRemainder = false) {
+            return $this->pipe(function ($collection) use ($map, $remainderKey, $preserveKeys, $forceRemainder) {
                 // Start new collection
                 $results = collect([]);
                 // iterate through the map
@@ -27,7 +27,9 @@ class ShardWithKeys
                     $results->put($key, $partition->unless($preserveKeys, fn ($all) => $all->values()));
                 }
                 // append remainder
-                $results->put($remainderKey, $collection->unless($preserveKeys, fn ($all) => $all->values()));
+                if ($collection->isNotEmpty() || $forceRemainder) {
+                    $results->put($remainderKey, $collection->unless($preserveKeys, fn ($all) => $all->values()));
+                }
 
                 // done!
                 return $results;

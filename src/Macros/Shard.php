@@ -15,8 +15,8 @@ class Shard
 {
     public function __invoke(): Closure
     {
-        return function (iterable $map, bool $preserveKeys = false) {
-            return $this->pipe(function (Collection $collection) use ($map, $preserveKeys) {
+        return function (iterable $map, bool $preserveKeys = false, bool $forceRemainder = false) {
+            return $this->pipe(function (Collection $collection) use ($map, $preserveKeys, $forceRemainder) {
                 // Start a new collection
                 $results = collect([]);
                 // iterate
@@ -26,8 +26,11 @@ class Shard
                     // Append
                     $results->push($partition->unless($preserveKeys, fn ($all) => $all->values()));
                 }
-                // append remainder
-                $results->push($collection->unless($preserveKeys, fn ($all) => $all->values()));
+                // append remainder, if not empty or forced to
+                // when the map is empty, collection is matched to the original
+                if ($collection->isNotEmpty() || $forceRemainder) {
+                    $results->push($collection->unless($preserveKeys, fn ($all) => $all->values()));
+                }
 
                 // done!
                 return $results;

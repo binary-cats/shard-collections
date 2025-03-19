@@ -92,3 +92,25 @@ it('can shard to the same assoc collection with an empty map', function () {
     expect($output)->toHaveCount(1);
     expect($output->get('Baz'))->toEqual($collection);
 });
+
+it('can shard collection with forcing remainder', function () {
+    $collection = collect(['one' => 1, 'two' => 2, 'three' => 3]);
+
+    $output = $collection->shardWithKeys(
+        map: [fn ($item) => $item < 10],
+        remainderKey: 'Baz',
+        forceRemainder: false
+    );
+
+    expect($output)->toBeInstanceOf(Collection::class);
+    expect($output)->toHaveCount(1);
+
+    $output = $collection->shardWithKeys(
+        map: [fn ($item) => $item < 10],
+        remainderKey: 'Baz',
+        forceRemainder: true
+    );
+
+    expect($output)->toBeInstanceOf(Collection::class);
+    expect($output)->toHaveCount(2);
+});
