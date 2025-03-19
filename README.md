@@ -53,6 +53,21 @@ $output = $collection->shard($map, true);
 // ]
 ```
 
+The remainder is included when it is not empty. You can force remainder by passing the last argument
+```php
+
+$output = $collection->shard(
+    map: $map, 
+    forceRemainder: true
+);
+
+// Result:
+// [
+//     collect(['one' => 1, 'two' => 2, 'three' => 3]), // Remaining items
+//     collect([]) // Remainder is empty, but is included 
+// ]
+```
+
 ### The `shardWithKeys()` Method
 
 The `shardWithKeys()` method works similarly to `shard()` but allows you to specify custom keys for each sub-collection. This is particularly useful when you want to give meaningful names to your sharded collections.
@@ -110,6 +125,21 @@ $output = $collection->shardWithKeys($map, 'medium', true);
 // ]
 ```
 
+The remainder is included when it is not empty. You can force remainder by passing the last argument
+```php
+collect(['one' => 1, 'two' => 2, 'three' => 3])->shard(
+    map: [fn ($item) => $item < 10],
+    forceRemainder: true
+);
+
+// Result:
+// [
+//     collect(['one' => 1, 'two' => 2, 'three' => 3]) // Remaining items
+//     collect([]) // Remainder is empty, but is included
+// ]
+```
+
+
 ## Empty Maps
 
 When you provide an empty map, both methods will return a single collection containing all items:
@@ -121,7 +151,7 @@ $output = $collection->shard([]);
 // Result: [collect([1, 2, 3])]
 
 $output = $collection->shardWithKeys([], 'all');
-// Result: ['all' => collect([1, 2, 3])]
+// Result: ['all' => collect([1, 2, 3])] 
 ```
 
 ## Testing

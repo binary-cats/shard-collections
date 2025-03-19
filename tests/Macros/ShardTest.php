@@ -76,7 +76,7 @@ it('can shard an assoc collection and preserve keys', function () {
 it('can shard to the same collection with an empty map', function () {
     $collection = collect([1, 2, 3]);
 
-    $output = $collection->shard([]);
+    $output = $collection->shard([], false, true);
 
     expect($output)->toBeInstanceOf(Collection::class);
     expect($output)->toHaveCount(1);
@@ -86,9 +86,29 @@ it('can shard to the same collection with an empty map', function () {
 it('can shard to the same assoc collection with an empty map', function () {
     $collection = collect(['one' => 1, 'two' => 2, 'three' => 3]);
 
-    $output = $collection->shard([], true);
+    $output = $collection->shard([], true, true);
 
     expect($output)->toBeInstanceOf(Collection::class);
     expect($output)->toHaveCount(1);
     expect($output->first())->toEqual($collection);
+});
+
+it('can shard collection with forcing remainder', function () {
+    $collection = collect(['one' => 1, 'two' => 2, 'three' => 3]);
+
+    $output = $collection->shard(
+        map: [fn ($item) => $item < 10],
+        forceRemainder: false
+    );
+
+    expect($output)->toBeInstanceOf(Collection::class);
+    expect($output)->toHaveCount(1);
+
+    $output = $collection->shard(
+        map: [fn ($item) => $item < 10],
+        forceRemainder: true
+    );
+
+    expect($output)->toBeInstanceOf(Collection::class);
+    expect($output)->toHaveCount(2);
 });
