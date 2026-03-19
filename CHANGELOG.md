@@ -2,6 +2,10 @@
 
 All notable changes to `shard-collections` will be documented in this file.
 
+## v1.1 - 2026-03-19
+
+* Upgrade to Laravel 13
+
 ## v1.1 - 2025-03-19
 
 ### What's Changed
