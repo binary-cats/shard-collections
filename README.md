@@ -160,6 +160,10 @@ $output = $collection->shardWithKeys([], 'all');
 composer test
 ```
 
+## Support us
+
+[Binary Cats](https://binarycats.dev) is a webdesign agency based in Illinois, US.
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
