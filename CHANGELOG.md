@@ -2,6 +2,15 @@
 
 All notable changes to `shard-collections` will be documented in this file.
 
+## v1.3 | Dependencies bump - 2026-04-12
+
+### What's Changed
+
+* Bump actions/checkout from 4 to 6 by @dependabot[bot] in https://github.com/binary-cats/shard-collections/pull/12
+* Bump dependabot/fetch-metadata from 2.5.0 to 3.0.0 by @dependabot[bot] in https://github.com/binary-cats/shard-collections/pull/13
+
+**Full Changelog**: https://github.com/binary-cats/shard-collections/compare/1.2.0...1.3.0
+
 ## v1.2 | Laravel 13 - 2026-03-19
 
 ### What's Changed
